@@ -1,0 +1,42 @@
+type User {
+  id: ID
+  email: String!
+  post(id: ID!): Post
+  posts: [Post!]!
+  follower(id: ID!): User
+  followers: [User!]!
+  followee(id: ID!): User
+  followees: [User!]!
+}
+
+type Post {
+  id: ID
+  user: User!
+  title: String!
+  body: String!
+  comment(id: ID!): Comment
+  comments: [Comment!]!
+}
+
+type Comment {
+  id: ID
+  user: User!
+  post: Post!
+  title: String
+  body: String!
+}
+
+type Query {
+  user(id: ID!): User
+}
+
+type Mutation {
+  createUser(email: String!): User
+  removeUser(id: ID!): Boolean
+  follow(follower: ID!, followee: ID!): Boolean
+  unfollow(follower: ID!, followee: ID!): Boolean
+  createPost(user: ID!, title: String!, body: String!): Post
+  removePost(id: ID!): Boolean
+  createComment(user: ID!, post: ID!, title: String!, body: String!): Comment
+  removeComment(id: ID!): Boolean
+}
